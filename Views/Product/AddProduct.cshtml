@@ -1,0 +1,44 @@
+﻿﻿@model LabTask5.Models.Product
+@using LabTask5.Context
+@{
+    ViewBag.Title = "AddProduct";
+    AppContextModel _dbContext = new AppContextModel();
+}
+
+<h2>AddProduct</h2>
+
+<style>
+    .rederr {
+        color: red;
+        font-size: xx-small;
+    }
+</style>
+
+<h2>Save Employee Information</h2>
+<hr />
+
+@using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.Id)
+    <div class="container">
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        </div>
+        @{
+            var categories_data = _dbContext.Category.ToList();
+        }
+        <div class="form-group">
+            @Html.LabelFor(x => x.CategoryId)
+            @Html.DropDownListFor(x => x.CategoryId, new SelectList(categories_data, "Id", "CategoryType"), "--Select--", new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.price)
+            @Html.TextBoxFor(x => x.price, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <input id="saveBtn" type="submit" value="save" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
